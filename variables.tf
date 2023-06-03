@@ -17,6 +17,11 @@ variable "enable_dns_support" {
 }
 
 # SUBNET PUBLICA
+variable "map_public_ip_on_launch" {
+  description = "Enable Public IP"
+  type        = bool
+  default     = true
+}
 variable "availability_zone_pub" {
   description = "Availability zone for the subnet"
   type        = string
@@ -41,12 +46,6 @@ variable "subnet_cidr_block_priv" {
   description = "CIDR block for the subnet"
   type        = string
   default     = "10.0.2.0/24"
-}
-
-# Internet Gateway
-variable "internet_gateway_id" {
-  description = "ID do Internet Gateway"
-  type        = string
 }
 
 # Route Table
