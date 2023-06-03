@@ -1,4 +1,4 @@
-## Estrutura Básica de Rede como Código na AWS
+## Estrutura Básica Infra as code na AWS
 
 Este repositório contém um exemplo de estrutura básica de rede implementada como código na AWS. Utilizando a prática de infraestrutura como código, a configuração da rede é automatizada e gerenciada por meio do Terraform. A estrutura inclui uma VPC (Virtual Private Cloud), duas subnets (pública e privada), um Internet Gateway, um NAT Gateway e um Elastic IP.
 
