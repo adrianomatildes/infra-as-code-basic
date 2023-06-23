@@ -17,13 +17,6 @@ steps:
     artifactName: 'publish'
     targetPath: .
 
-- task: CopyFiles@2  # Tarefa para copiar os arquivos do GitHub
-  displayName: 'Copy Files from GitHub'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/publish'
-    Contents: '**'
-    TargetFolder: '$(Build.SourcesDirectory)/adrianomatildes/_git/AWS-AZURE-GITHUB'
-
 - script: |
     echo Instalando o Terraform!
     which wget &&
