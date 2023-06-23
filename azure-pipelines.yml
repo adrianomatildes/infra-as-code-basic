@@ -24,7 +24,7 @@ steps:
   inputs:
     SourceFolder: .
     Contents: '**'
-    TargetFolder: .
+    TargetFolder: '$(Build.SourcesDirectory)/_git/AWS-AZURE-GITHUB'
 
 - script: |
     echo Instalando o Terraform!
