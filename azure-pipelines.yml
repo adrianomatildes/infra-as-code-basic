@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+  githubRepository: 'https://github.com/adrianomatildes/infra-as-code-basic'
+  githubBranch: 'master'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: git://$(githubRepository)#$(githubBranch)
+  displayName: 'Checkout GitHub Repository'
+
+- checkout: self
+  persistCredentials: true
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    artifactName: 'publish'
+    targetPath: .
+- script: Instalando o Terraform!
+    which wget &&
+    sudo apt-get install wget &&
+    wget https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip &&
+    sudo apt-get install unzip &&
+    unzip terraform_0.15.5_linux_amd64.zip &&
+    sudo mv terraform /usr/local/bin/ &&
+    terraform --version
+  displayName: 'Run a one-line script'
