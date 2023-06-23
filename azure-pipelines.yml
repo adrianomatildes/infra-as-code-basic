@@ -6,16 +6,10 @@
 trigger:
 - master
 
-variables:
-  githubRepository: 'https://github.com/adrianomatildes/infra-as-code-basic'
-  githubBranch: 'master'
-
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- checkout: git://$(githubRepository)#$(githubBranch)
-  displayName: 'Checkout GitHub Repository'
 
 - checkout: self
   persistCredentials: true
