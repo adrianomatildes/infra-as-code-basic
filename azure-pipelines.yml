@@ -18,7 +18,8 @@ steps:
   inputs:
     artifactName: 'publish'
     targetPath: .
-- script: Instalando o Terraform!
+- script: |
+    echo Instalando o Terraform!
     which wget &&
     sudo apt-get install wget &&
     wget https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip &&
