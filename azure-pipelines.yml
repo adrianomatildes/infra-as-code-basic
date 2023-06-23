@@ -11,35 +11,18 @@ pool:
 
 steps:
 
-- task: CopyFiles@2  # Tarefa para copiar os arquivos do GitHub
-  displayName: 'Copy Files from GitHub'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/adrianomatildes/infra-as-code-basic'
-    Contents: '**'
-    TargetFolder: '$(Build.SourcesDirectory)/adrianomatildes/_git/AWS-AZURE-GITHUB'
-
-- script: |
-    cd $(Build.SourcesDirectory)/adrianomatildes/_git/AWS-AZURE-GITHUB
-
-    git config --global user.email "adriano.matildes@outlook.com"
-    git config --global user.name "Adriano Matildes"
-
-    git add .
-    git commit -m "Adicionar arquivos do GitHub"
-    git push origin master
-  displayName: 'Adicionar e fazer o push dos arquivos'
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Artifacts'
   inputs:
     artifactName: 'publish'
     targetPath: .
 
-- task: CopyFiles@2  # Tarefa para copiar o artefato para o repositório
-  displayName: 'Copy Artifact to Repository'
+- task: CopyFiles@2  # Tarefa para copiar os arquivos do GitHub
+  displayName: 'Copy Files from GitHub'
   inputs:
-    SourceFolder: .
+    SourceFolder: '$(Build.SourcesDirectory)/publish'
     Contents: '**'
-    TargetFolder: '$(Build.SourcesDirectory)/_git/AWS-AZURE-GITHUB'
+    TargetFolder: '$(Build.SourcesDirectory)/adrianomatildes/_git/AWS-AZURE-GITHUB'
 
 - script: |
     echo Instalando o Terraform!
