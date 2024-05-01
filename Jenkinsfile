@@ -1,55 +1,36 @@
 pipeline {
     agent any
-
-    environment {
-        GIT_AUTHOR = ""
+    parameters {
+        string(name: 'PLANET', defaultValue: 'Earth', description: 'Which planet are we on?')
+        string(name: 'GREETING', defaultValue: 'Hello', description: 'How shall we greet?')
     }
-
+    triggers {
+        cron('15 14 * * *') // Agendar para as 14:12
+    }
     stages {
-        stage('Checkout') {
+        stage('Check Schedule') {
             steps {
-                checkout scm
-                // Obtém o autor do commit mais recente
-                script {
-                    def author = sh(script: "git log -1 --pretty=format:'%ae'", returnStdout: true).trim()
-                    env.GIT_AUTHOR = author
+                timeout(time: 24, unit: 'HOURS') {
+                    script {
+                        def now = new Date()
+                        def calendar = Calendar.getInstance()
+                        calendar.time = now
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY)
+                        int minute = calendar.get(Calendar.MINUTE)
+
+                        if (hour == 14 && minute == 15) {
+                            echo "Scheduled time reached. Executing pipeline."
+                        } else {
+                            error "Pipeline execution aborted. Scheduled time not reached."
+                        }
+                    }
                 }
             }
         }
-
-        stage('Build') {
+        stage('Example') {
             steps {
-                // Código de construção aqui
-                sh "echo Teste de build"
-            }
-        }
-
-        stage('Test') {
-            steps {
-                // Código de teste aqui
-                sh "exit 1"
-            }
-        }
-    }
-
-    post {
-        failure {
-            script {
-                // Configura as credenciais SMTP
-                emailext (
-                    subject: "Falha no Job: ${env.JOB_NAME}",
-                    body: """\
-                    Olá,
-
-                    O job ${env.JOB_NAME} falhou no build ${env.BUILD_NUMBER}.
-                    Consulte o console de saída para mais detalhes.
-
-                    Obrigado,
-                    Jenkins
-                    """,
-                    to: env.GIT_AUTHOR,
-                    replyTo: 'seu-email@dominio.com'
-                )
+                echo "${params.GREETING} ${params.PLANET}"
+                script { currentBuild.description = "${params.GREETING} ${params.PLANET}" }
             }
         }
     }
